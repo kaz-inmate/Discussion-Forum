@@ -1,10 +1,12 @@
-<div class="container">
-    <section>
-            {{ >errors}}
-    <form action="/verify" id="signup" method="post"> 
+  <div class="container">
+   {{>errors}}
+ <form action="/verify" id="signup" method="post"> 
         Token:<br>
-        <input type="text" name="secretToken" class="inp_class" placeholder="Secret Token"><br>
-        <button id="signBtn">Verify</button>
+        <div class="input-group mb-3">
+    <input type="text" name="secretToken" class="form-control" placeholder="Your token here" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
+    <div class="input-group-append">
+    <button class="btn btn-outline-secondary" id="signBtn" type="submit">Verify</button>
+  </div>
+</div>
     </form>
-    </section>  
     </div>

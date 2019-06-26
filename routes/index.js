@@ -121,21 +121,21 @@ router.get('/verify', (req, res) => {
 
 router.post('/verify', (req, res) => {
   const { secretToken } = req.body;
-  User.findOne({ secretToken: secretToken})
-  .then(user => {
-    if(!user) {
-      req.flash('error_msg', 'No user found');
-      res.redirect('/verify');
-    } else {
-       user.active = true;
-      user.secretToken = '';
-      user.save();
-      req.flash('success_msg', "You can now login");
-      res.redirect('/login');
-    }
-  })
-  .catch(err => console.log(err));
-  
+    User.findOne({ secretToken: secretToken})
+    .then(user => {
+      if(!user) {
+        req.flash('error_msg', 'The token doesnt match. Please check your token');
+        res.redirect('/verify');
+      } else {
+         user.active = true;
+        user.secretToken = '';
+        user.save();
+        req.flash('success_msg', "You can now login");
+        res.redirect('/login');
+      }
+    })
+    .catch(err => console.log(err));
+
 });
 
 //settings route
