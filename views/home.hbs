@@ -1,0 +1,43 @@
+{{>sidenav}}
+
+ <div class=" user-input col-lg-7 col-md-9 col-sm-10">
+    <form class="" action="#" method="post">
+      <input class="input-area title-input" type="text" placeholder="Enter post title here." name="title" value=""> <br>
+      <textarea class="input-area desc-input" type="text" placeholder="Enter post description here." name="textarea" value=""></textarea> <br>
+      <button class="btn btn-dark btn-sm submit-button" type="submit" name="button"> Submit </button>
+    </form>
+  </div>
+
+
+
+
+  <!-- Posts Section -->
+{{#each posts}}
+  <div class="row">
+    <div class="userposts col-lg-7 col-md-9 col-sm-10">
+      <div class="uservote">
+        <i class="fas fa-chevron-up"></i><br>
+        <a href="#"></a><br>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+
+     <div class="title-desc">
+      <a href="/posts/{{id}}"><h4>{{this.title}}</h4></a>
+        <h6>{{this.textarea}}</h6>
+      </div>
+      <div class="">
+        <span class="time-section">
+         <p>Posted By: <a href="#">{{this.username}}</a>
+         <i>on {{this.created_date}}</i></p>
+           
+        </span>
+      </div>
+
+    </div>
+    </div>
+{{/each}}
+
+
+
+
+

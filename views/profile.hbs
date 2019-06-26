@@ -1,0 +1,10 @@
+{{>sidenav}}
+<main>
+    <p>Your posts: </p>
+    {{#each posts}}
+        <div class="box">
+
+           {{this.textarea}}
+        </div>
+        {{/each}}
+</main>

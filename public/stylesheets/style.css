@@ -1,0 +1,211 @@
+body {
+  background-color:#f0f0f0;
+  /* font-family: 'Open Sans'; */
+}
+
+
+.row{
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Search Bar */
+
+.search-input{
+  border-radius: 18px;
+  position: relative;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  font-style: italic;
+  padding-left: 1rem;
+}
+
+.search-bar{
+  border-radius: 20px;
+  margin: 1.4rem auto;
+  position: relative;
+}
+.search-button{
+  border-radius: 20px;
+  position: absolute;
+  right:1rem;
+  top: 0;
+}
+
+
+/* User Input Section */
+.user-input{
+  background-color: #f0f0f0;
+  margin: 0 auto;
+}
+.input-area{
+width:100%;
+border:2px solid #D4D3D2;
+padding: 0.5rem 1rem;
+
+}
+.title-input{
+  border-bottom: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  font-size: 1.3rem;
+}
+.desc-input{
+  border-top: none;
+  border-bottom-left-radius:10px;
+  border-bottom-right-radius:10px;
+  font-size: 1.1rem;
+  max-height: 250px;
+}
+
+.submit-button{
+  /* height:38px; */
+  border-radius: 20px;
+  margin-top: 0.2rem;
+  width: 5rem;
+}
+.reply-button{
+  border-radius: 20px;
+  /* align-content: center; */
+  height: 25px;
+  background: #f0f0f0;
+  border: none;
+
+}
+.textarea-display{
+  display: none;
+}
+
+/* .textarea-display:active{
+  transition: 5000;
+} */
+
+.comment-reply{
+  border-radius: 5px;
+  max-height: 150px;
+  width: 90%;
+  padding-left: 0.5rem;
+}
+.submit-reply-button{
+  height: 28px;
+  border-radius: 20px;
+}
+
+/* Feed Section */
+.feed{
+  /* padding:1rem 15%; */
+  width:50%;
+  margin: 1rem auto;
+}
+
+/* Post Section */
+.post{
+  padding:1rem;
+}
+
+.vote-column{
+  text-align: center;
+  float: left;
+}
+.content-column{
+  float:right
+}
+
+/* Vote Icons on Hover */
+.fas:hover{
+  text-shadow: 2px 2px 5px #0f0f0f;
+}
+
+
+
+/* Single Post Page */
+
+/* Main Post */
+.post-comment{
+  padding: 1rem 2rem;
+}
+.vote-section{
+  float: left ;
+}
+.time-section{
+  float: right ;
+  margin-bottom: 0.2rem;
+}
+
+.comment-area{
+  border-radius: 10px;
+  max-height: 200px;
+}
+
+/* Comments Display  */
+
+.user-comments{
+  margin-top: 1rem;
+}
+.comment-box{
+  padding:0 1rem 1rem;
+}
+
+/* Recommended Posts Section */
+
+.recommended h4{
+  padding: 2.5rem 0 0 0.8rem;
+}
+.related{
+  padding: 1rem 0.5rem;
+}
+.related-post{
+  padding: 1rem 0.5rem;
+}
+
+
+/* Sign Up Page */
+
+.form-signin{
+  margin: 2rem auto;
+  text-align: center;
+  align-content: center;
+}
+.signin-btn{
+  text-align:center;
+  margin: 0.5rem 0rem 0.5rem;
+
+}
+
+/* Profile Page */
+.userposts {
+  margin:1rem auto;
+  padding: 0 1.5rem;
+  position: relative;
+
+}
+
+.uservote {
+
+  float: left;
+  padding:0.5rem 1rem 0.5rem 0;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  height: 100%;
+}
+
+.title-desc.h4 {
+  padding: 0 0.5rem;
+
+}
+
+
+/* Search Bar Profile */
+
+.search-bar-profile{
+  border-radius: 20px;
+  margin: 1.4rem auto;
+  position: relative;
+}
+.search-button-profile{
+  border-radius: 20px;
+  position: absolute;
+  right:1rem;
+  top: 0;
+}

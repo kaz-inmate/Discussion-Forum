@@ -1,0 +1,43 @@
+
+ 
+ <form action="" class="form-signin col-lg-3 col-md-6 col-sm-7" method="post">
+
+    <h1 class="h4 mb-3 font-weight-normal">Log into your account ?</h1>
+    {{>errors}}
+    <label for="email" class="sr-only">Username</label>
+    <input type="email"  name="email" class="form-control " placeholder="Email address" required autofocus>
+
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control mb-2" placeholder="Password" required>
+
+
+    <button class="btn btn-dark btn-block" type="submit">Login</button><br>
+    <span>
+      <a class="text-muted small" href="/">Don't have an account ? Sign up now.</a>
+      <!-- <button class="btn btn-light btn-sm " type="submit">SignUp</button> -->
+    </span>
+    <!-- <small><a class="text-muted" href="#">Forgot password?</a> </small> -->
+    <div class="">
+      <a class="text-muted small" href="#">Forgot Password? Not again!</a>
+    </div>
+  </form> 
+
+
+
+
+
+
+
+<!-- 
+<div class="container">
+<section>
+        <% include ./partials/errors %>
+<form id="signup" method="post"> 
+    Email:<br>
+    <input type="email" name="email" class="inp_class"><br>
+    Password:<br>
+    <input type="password" name="password" class="inp_class"><br>
+    <button id="signBtn">SignIn</button>
+</form>
+</section>  
+</div> -->

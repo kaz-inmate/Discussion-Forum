@@ -1,0 +1,27 @@
+  {{>errors}}
+  <form class="form-signin col-lg-3 col-md-5 col-sm-4" action="/" method="POST">
+
+    <h4 class="mb-3 mt-5 font-weight-normal">Create an account ?</h4>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" id="inputEmail" class="form-control " name="email" placeholder="Email address" required autofocus>
+
+    <label for="username" class="sr-only mb-1">Username</label>
+    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+
+    <label for="inputPassword" class="sr-only mb-1">Password</label>
+    <input type="password" id="inputPassword" class="form-control mb-2" name="password" placeholder="Password" required>
+
+    <label for="inputPassword" class="sr-only mb-1">Confirm Password</label>
+    <input type="password" id="Password" class="form-control mb-2" name="password2" placeholder="Password" required>
+
+
+
+    <button class="btn btn-dark btn-block" type="submit">Sign Up</button><br>
+    <span>
+      <a class="text-muted small" href="/login"> Already have an account? Login. &nbsp</a>
+      
+    </span>
+
+
+    <!-- <p class="mt-5 mb-3 text-muted">&copy; 2019</p> -->
+  </form>
