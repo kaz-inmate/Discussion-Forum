@@ -19,20 +19,60 @@
 
   <!-- Google Fonts CDN -->
   <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  
    <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 <body>
        {{{body}}}
-</body>
 
- <script type="text/javascript">
-    function toggle_visibility(id) {
-       var e = document.getElementById(id);
-       if(e.style.display == 'none')
-          e.style.display = 'block';
-       else
-          e.style.display = 'none';
-    }
-</script>
-<script src="javascript/app.js"></script>
+     
+
+</body>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+  <script type="text/javascript">
+
+         $(document).ready(function() {
+      console.log("Ready")
+    $(".vote-up").on('click',function(e) {
+       e.preventDefault();
+
+      
+     var postId = $(this).data("id");
+     console.log(postId)
+      $.ajax({
+        type: "PUT",
+        url: "home/" + postId + "/vote-up",  
+        success: (data) => {
+          $(".vote-up" + postId).text(data.voteScore);
+        },
+        error: function(err) {
+          console.log(err.messsage);
+        }
+      });
+    });
+  
+    $(".vote-down").on('click', function(e) {
+      e.preventDefault();
+      
+        var postId = $(this).data("id");
+        console.log(postId)
+      $.ajax({
+        type: "PUT",
+        url: "home/" + postId + "/vote-down",
+        success: function(data) {
+          console.log("voted down!");
+        },
+        error: function(err) {
+          console.log(err.messsage);
+        }
+      });
+    });
+
+    $(".comment-up").on('click', (e) => {
+       e.preventDefault();
+       console.log("clicked");
+    })
+  });
+      </script>
 </html>

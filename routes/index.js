@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const randomstring = require('randomstring');
+// const randomstring = require('randomstring');
 const {ifLegal} = require('../config/auth');
 
 const bcrypt = require('bcryptjs');
@@ -8,7 +8,7 @@ const passport = require('passport');
 const User = require('../model/User');
 const Post = require('../model/Post');
 const Comment = require('../model/Commens');
-const transport = require('../mailer/mailer');
+// const transport = require('../mailer/mailer');
 
 
 router.get('/', (req, res) => {
@@ -49,47 +49,21 @@ router.post('/', (req, res) => {
               if (err) throw err;
               newUser.password = hash;
               
-              const secretToken = randomstring.generate();
-              newUser.secretToken = secretToken;
+              // const secretToken = randomstring.generate();
+              // newUser.secretToken = secretToken;
               
-              //flag the account as inactive
+              // //flag the account as inactive
 
-              newUser.active = false;
+              // newUser.active = false;
 
               newUser
                 .save()
                 .then(user => {
-
-                  const mailOptions = {
-                    from: 'admin',
-                    to: user.email,
-                    subject: 'Please verify your email',
-                    html: `Thanks for registering,
-                    <br/>
-                    Please copy this token and verify you email<br/>
-                    <br/>
-                    Token: <b>${secretToken}</b>
-                    <br/>
-                    Paste your token here:
-                    <a href="http://localhost:5000/verify">
-                    http://localhost:5000/verify</a>
-                    <br/>
-                    Thanks again.`
-                  };
-                          //send mail
-                  transport.sendMail(mailOptions, (err, info) => {
-                    if (err) {
-                      console.log('error');
-                    }
-                    else {
-                      return info;
-                    }
-                  });
                    req.flash(
                     'success_msg',
-                    'Please check your email to verify your account and log in'
+                    'Register Successful...You can now log in'
                   );
-                  res.redirect('/verify');
+                  res.redirect('/login');
                 })
                 .catch(err => console.log(err));
             });
@@ -113,30 +87,7 @@ router.post('/login', (req, res, next) => {
 });
 
 
-//verify route
 
-router.get('/verify', (req, res) => {
-  res.render('verify.hbs');
-});
-
-router.post('/verify', (req, res) => {
-  const { secretToken } = req.body;
-    User.findOne({ secretToken: secretToken})
-    .then(user => {
-      if(!user) {
-        req.flash('error_msg', 'The token doesnt match. Please check your token');
-        res.redirect('/verify');
-      } else {
-         user.active = true;
-        user.secretToken = '';
-        user.save();
-        req.flash('success_msg', "You can now login");
-        res.redirect('/login');
-      }
-    })
-    .catch(err => console.log(err));
-
-});
 
 //settings route
 
@@ -168,7 +119,7 @@ router.get('/home', ifLegal, (req, res) => {
 router.post('/home', (req, res) => {
   const {title,textarea} = req.body;
   const username = req.user.username;
-  const newPost = new Post({title,textarea, username});
+  const newPost = new Post({title, textarea, username});
   newPost.save()
     .then(posts => {
       console.log('Post saved');
@@ -177,6 +128,35 @@ router.post('/home', (req, res) => {
     .catch(err => {
       if(err) throw err;
     });
+
+    // Voting on posts
+newPost.upVotes = [];
+newPost.downVotes = [];
+newPost.voteScore = 0;
+
+});
+
+
+//votes route for counting votes
+router.put("/home/:id/vote-up", (req, res) => {
+  Post.findById(req.params.id).exec((err, post) => {
+    post.upVotes.push(req.user._id);
+    post.voteScore = post.voteScore + 1;
+    post.save();
+
+    res.status(200);
+  });
+});
+
+router.put("/home/:id/vote-down", (req, res) => {
+  Post.findById(req.params.id).exec((err, post) => {
+    post.downVotes.push(req.user._id);
+    post.voteScore = post.voteScore - 1;
+    post.save();
+
+    res.status(200);
+
+  });
 });
 
 //profile route
@@ -221,7 +201,7 @@ router.post("/posts/:postId/comments", ifLegal, (req, res) => {
     return post.save();
   })
   .then(post => {
-    res.redirect(`/`);
+    res.redirect(`/home`);
   })
   .catch(err => {
     console.log(err);

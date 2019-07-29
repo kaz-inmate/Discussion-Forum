@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 var initialDate = new Date().toLocaleDateString();
 
 const PostSchema = new mongoose.Schema({
+
     username :{
         type:String
     },
@@ -30,7 +31,11 @@ const PostSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Comment'
     }
-  ]
+  ],
+
+upVotes : [{ type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+downVotes : [{ type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+voteScore : {type: Number}
   
 });
 

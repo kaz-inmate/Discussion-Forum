@@ -13,12 +13,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  secretToken: {
-    type: String
-  },
-  active : {
-    type: Boolean
-  },
+  // secretToken: {
+  //   type: String
+  // },
+  // // active : {
+  // //   type: Boolean
+  // // },
   posts : [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }]
 });
 

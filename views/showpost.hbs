@@ -33,8 +33,8 @@
 
       <!-- User Reply -->
       <div class="comment-box">
-        <form class="" action="#" method="post">
-          <textarea class="input-area comment-area" type="text" placeholder="Enter your comment here..." name="" value=""></textarea> <br>
+        <form class="" action="/posts/{{post._id}}/comments" method="post">
+          <textarea class="input-area comment-area"  name = "comment" type="text" placeholder="Enter your comment here..." name="" value=""></textarea> <br>
           <button class="btn btn-dark submit-button btn-sm" type="submit" name="button"> Comment </button>
         </form>
       </div>
@@ -45,9 +45,9 @@
       <div class="row">
         <div class="userposts col-lg-12 col-md-12 col-sm-12">
             <div class="uservote">
-              <i class="fas fa-chevron-up"></i><br>
+              <i class="fas fa-chevron-up comment-up"></i><br>
               <a href="#">111</a><br>
-              <i class="fas fa-chevron-down"></i>
+              <i class="fas fa-chevron-down comment-down"></i>
             </div>
 
             <div class="title-desc">
@@ -55,57 +55,15 @@
             </div>
             <div class="">
               <span class="time-section">
-
-                <!-- Changes made here -->
-                <button class=" reply-button " type="button" name="button" onclick="toggle_visibility('textarea1');"><em>Reply</em> </button>|
-                <i>4 days ago </i> |
+                <i>{{this.created_date}} </i>
                 <a href="#">{{this.author.username}}</a>
-              </span>
-              <!-- Changes made here -->
-              <div class="textarea-display" id="textarea1" >
-                <form class="" action="" method="post">
-                  <textarea class="comment-reply" name="name"  placeholder="Enter your reply here..."></textarea>
-                  <button class="btn btn-dark btn-sm submit-reply-button "type="submit" name="button">Submit reply</button>
-                </form>
-
+              </span> 
               </div>
             </div>
 
         </div>
-        </div>
         {{/each}}
     </section>
 
-    <section class="col-lg-4 col-md-6 recommended">
-      <h4>You might find these helpful.</h4>
-      <div class="related">
-        <div class="related-post">
-          <h6>This is a post which is related to the discussion. This might be interesting and/or what youre looking for.</h6>
-        </div>
-        <div class="related-post">
-          <h6>This is a post which is related to the discussion. This might be interesting and/or what youre looking for.</h6>
-        </div>
-        <div class="related-post">
-          <h6>This is a post which is related to the discussion. This might be interesting and/or what youre looking for.</h6>
-        </div>
-        <div class="related-post">
-          <h6>This is a post which is related to the discussion. This might be interesting and/or what youre looking for.</h6>
-        </div>
-        <div class="related-post">
-          <h6>This is a post which is related to the discussion. This might be interesting and/or what youre looking for.</h6>
-        </div>
-        <div class="related-post">
-          <h6>This is a post which is related to the discussion. This might be interesting and/or what youre looking for.</h6>
-        </div>
-        <div class="related-post">
-          <h6>This is a post which is related to the discussion. This might be interesting and/or what youre looking for.</h6>
-        </div>
-        <div class="related-post">
-          <h6>This is a post which is related to the discussion. This might be interesting and/or what youre looking for.</h6>
-        </div>
-
-
-      </div>
-
-    </section>
+   
   </div>

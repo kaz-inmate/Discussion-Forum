@@ -26,7 +26,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 //handlebars
 app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', '.hbs');
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 // Express body parser
 app.use(express.urlencoded({ extended: true }));
