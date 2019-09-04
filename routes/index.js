@@ -1,212 +1,80 @@
 const express = require('express');
 const router = express.Router();
-// const randomstring = require('randomstring');
 const {ifLegal} = require('../config/auth');
-
-const bcrypt = require('bcryptjs');
-const passport = require('passport');
-const User = require('../model/User');
+const {isAdmin} = require('../config/admin');
 const Post = require('../model/Post');
-const Comment = require('../model/Commens');
-// const transport = require('../mailer/mailer');
+const User = require('../model/User');
+const Notice = require('../model/Notices');
+
+const registerController = require('../controllers/registerController');
+const loginController = require('../controllers/loginController');
+const homeController = require('../controllers/homeController');
+const profileController = require('../controllers/profileController');
+const postsController = require('../controllers/postsController');
+const adminController = require('../controllers/adminController');
 
 
-router.get('/', (req, res) => {
-    res.render('register.hbs');
-});
 
-router.post('/', (req, res) => {
-    const { username, email, password, password2 } = req.body;
-    let errors = [];
-  
-    if (!username || !email || !password || !password2) {
-      errors.push({ msg: 'Please enter all fields' });
-    }
-     
-    if (password != password2) {
-      errors.push({ msg: 'Passwords do not match' });
-    }
-  
-    
-  
-    if (errors.length > 0) {
-      res.render('register', { errors});
-    } else {
-      User.findOne({ email: email })
-      .then(user => {
-        if (user) {
-          errors.push({ msg: 'Email already exists' });
-          res.render('register', {errors});
-        } else {
-          const newUser = new User({
-            username,
-            email,
-            password
-          });
-  
-          bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              if (err) throw err;
-              newUser.password = hash;
-              
-              // const secretToken = randomstring.generate();
-              // newUser.secretToken = secretToken;
-              
-              // //flag the account as inactive
-
-              // newUser.active = false;
-
-              newUser
-                .save()
-                .then(user => {
-                   req.flash(
-                    'success_msg',
-                    'Register Successful...You can now log in'
-                  );
-                  res.redirect('/login');
-                })
-                .catch(err => console.log(err));
-            });
-          });
-        }
-      });
-    }
-  });
+//register routes
+router.get('/', registerController.register_page);
+router.post('/', registerController.register_user);
 
 //login route
-router.get('/login', (req, res) => {
-    res.render('login.hbs');
-});
+router.get('/login', loginController.login_page);
+router.post('/login', loginController.login_func);
 
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/home',
-    failureRedirect: '/login',
-    failureFlash: true
-  })(req, res, next);
-});
-
-
-
+// Logout
+router.get('/logout', loginController.logout_page);
 
 //settings route
-
 router.get('/settings', ifLegal, (req, res) => {
     res.render('settings.hbs');
 });
 
-
-// Logout
-router.get('/logout', (req, res) => {
-  req.logout();
-  req.flash('success_msg', 'You are logged out');
-  res.redirect('/login');
-});
-
 //home route
-router.get('/home', ifLegal, (req, res) => {
-  Post.find({})
-    .then(post => {
-      res.render('home.hbs', {posts:post, username: req.user.username });
-    })
-    .catch(err => {
-      if(err) throw err;
-    });  
-  
-  
-});
+router.get('/home', ifLegal, homeController.home_page);
+router.post('/home', homeController.home_post);
+//votes route for counting votes on posts
+router.put("/:id/vote-up", homeController.vote_up);
+router.put("/:id/vote-down", homeController.vote_down);
+//report post
+router.get("/home/report/:id", ifLegal, homeController.report_post);
 
-router.post('/home', (req, res) => {
-  const {title,textarea} = req.body;
-  const username = req.user.username;
-  const newPost = new Post({title, textarea, username});
-  newPost.save()
-    .then(posts => {
-      console.log('Post saved');
-      res.redirect('/home');
-    })
-    .catch(err => {
-      if(err) throw err;
-    });
-
-    // Voting on posts
-newPost.upVotes = [];
-newPost.downVotes = [];
-newPost.voteScore = 0;
-
-});
-
-
-//votes route for counting votes
-router.put("/home/:id/vote-up", (req, res) => {
-  Post.findById(req.params.id).exec((err, post) => {
-    post.upVotes.push(req.user._id);
-    post.voteScore = post.voteScore + 1;
-    post.save();
-
-    res.status(200);
-  });
-});
-
-router.put("/home/:id/vote-down", (req, res) => {
-  Post.findById(req.params.id).exec((err, post) => {
-    post.downVotes.push(req.user._id);
-    post.voteScore = post.voteScore - 1;
-    post.save();
-
-    res.status(200);
-
-  });
-});
 
 //profile route
-
-router.get('/profile', ifLegal, (req, res) => {
- Post.find({username:req.user.username})
-   .then(post => {
-       res.render('profile.hbs', {posts:post});
-  })
-
-  .catch(err => {
-    if(err) throw err;  
-  });
-
-});
+router.get('/profile/:id', ifLegal, profileController.profile_page);
 
 //each posts
-router.get("/posts/:id", ifLegal, (req, res) => {
-  // LOOK UP THE POST
+router.get("/posts/:id", ifLegal, postsController.post_view);
+router.put("/posts/:id/vote-up", ifLegal, postsController.vote_up);
+router.put("/posts/:id/vote-down", ifLegal, postsController.vote_down);
 
-  Post.findById(req.params.id).populate({path:'comments', populate: {path: 'author'}}).populate('author')
-  .then(post => {
-      res.render("showpost.hbs", {post});  
-  })
-  .catch(err => {
-      console.log(err.message);
-  });
-});
-
+//edit post
+router.get("/posts/edit/:id", ifLegal, postsController.edit_post);
+//save edited post
+router.post("/posts/edit/:id", ifLegal, postsController.save_edited_post);
+//delete own post
+router.delete("/posts/delete/:id",  ifLegal, postsController.delete_own_post);
 //create comment
-router.post("/posts/:postId/comments", ifLegal, (req, res) => {
-  
-  const comment = new Comment(req.body);
-  comment.author = req.user._id;
-  comment
-  .save()
-  .then(comment => {
-    return Post.findById(req.params.postId);
-  })
-  .then(post => {
-    post.comments.unshift(comment);
-    return post.save();
-  })
-  .then(post => {
-    res.redirect(`/home`);
-  })
-  .catch(err => {
-    console.log(err);
-  });
-});
+router.post("/posts/:postId/comments", ifLegal, postsController.comment_post);
+
+
+//see notices 
+router.get('/notices', ifLegal, homeController.get_notices);
+//adimin dash
+router.get("/admin", isAdmin, adminController.admin_page);
+
+router.get("/admin/:id", isAdmin, adminController.user_accept);
+
+router.post("/admin/notices", isAdmin, adminController.post_notices);
+
+router.delete("/admin/delete/:id", isAdmin, adminController.user_delete);
+
+//delete reported post
+router.delete("/admin/report/:id", isAdmin, adminController.delete_reported_post);
+
+//search bar func
+router.get('/search', ifLegal, homeController.search_notices);
 
 
 module.exports = router;

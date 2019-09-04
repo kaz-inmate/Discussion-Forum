@@ -1,0 +1,112 @@
+<div class="main-wrapper">
+<% include partials/sidenav %>
+
+
+
+  <!-- Search Bar -->
+  <div class="search-bar col-lg-7 col-md-9 col-sm-10">
+    <form action="/search" method="GET">
+    <input class="form-control search-input" type="search" name="query" placeholder="Search...">
+    <button class="btn btn-outline-dark search-button-profile " type="submit"><i class="fas fa-search"></i></button>
+    </form>
+  </div>
+
+
+  <!-- User Input Section -->
+  <div class=" user-input col-lg-7 col-md-9 col-sm-10">
+    <form class="" action="#" method="post">
+      <input class="input-area title-input" type="text" placeholder="Enter post title here." name="title" value="" required> <br>
+      <textarea class="input-area desc-input" type="text" placeholder="Enter post description here." name="textarea" value=""></textarea> <br>
+
+  
+
+<br>
+      <!-- Category Selector 2 -->
+      <div class="form-group  d-inline">
+          <select class=" btn btn-dark btn-sm dropdown-button" name="category" required>
+            <option value="">Select Category</option>
+            <option value="Coding Issues">Coding Issues</option>
+            <option value="Algorithm">Algorithm</option>
+            <option value="Exams">Exams</option>
+            <option value="Event">Event</option>
+          </select>
+  
+        </div>
+
+
+      <!-- Post Submit Button -->
+      <button class="btn btn-dark btn-sm submit-button" type="submit" name="button"> Submit </button>
+      <!-- <input id="form-tags-4" name="tags-4" type="text" value=""> -->
+    </form>
+    <br>
+    <br>
+  </div>
+
+
+
+
+  <!-- Posts Section -->
+  
+  <div class="row">
+      <span class="section-header col-lg-7 col-md-9 col-sm-10 ">
+
+          <i class="fas fa-2x fa-book-open">&nbsp</i>
+          <h3 class="d-inline"> Home Feed</h3>
+          <div class="float-right form-group d-inline">
+            <i class="fas fa-filter padding-lg"></i>
+            <select class=" btn btn-dark btn-sm dropdown-button" name="filter">
+              <option value=""> Filter Feed </option>
+              <option value="Coding Issues">Coding Issues</option>
+              <option value="Algorithm">Algorithm</option>
+              <option value="Exams">Exams</option>
+              <option value="Event">Event</option>
+            </select>
+  
+          </div>
+        </span>
+        <% posts.forEach(function(post) { %>
+    <div class="userposts col-lg-7 col-md-9 col-sm-10">
+
+      <article class="uservote" >
+        <% if(post.upVotes.includes(userid)) { %>
+          <i class="fas fa-chevron-up upvote-post is-liked" data-id="<%= post.id %>"></i><br>
+        <% } else { %>
+         <i class="fas fa-chevron-up upvote-post" data-id="<%= post.id %>"></i><br>
+        <% } %> 
+         <a href="#" class="vote-text"><%= post.voteScore %></a><br>
+         <% if(post.downVotes.includes(userid)) { %>
+        <i class="fas fa-chevron-down downvote-post is-liked" data-id="<%= post.id %>"></i>
+        <% } else { %>
+          <i class="fas fa-chevron-down downvote-post" data-id="<%= post.id %>"></i><br>
+          <% } %>  
+      </article>
+
+      <div class="title-desc">
+        <a href="/posts/<%= post.id %>"><p><%= post.title %></p></a>
+        <h6>The description of the post goes here. This section can contain longer text. It should describe about the title. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h6>
+      </div>
+      <div class="">
+        <a class = "btn no-padding-btn" href="/posts/<%= post.id %>"> <i class="fas fa-reply"></i> Comment</a>
+        <% if (username != post.author.username) { %>
+          <% if(post.reports.includes(userid)){ %>  
+             <i class="fas fa-flag"></i> Reported
+          <% } else { %>
+          <a class = "btn no-padding-btn" href="/home/report/<%= post.id %>"> <i class="fas fa-flag"></i> Report</a>
+          <% } %>
+       <% } %>
+        <span class="time-section">
+          <i><%= post.category %></i> 
+          <i><%= post.creation_date %></i> 
+          <a href="/profile/<%= post.id %>"><%= post.author.username %></a>
+        </span>
+      </div>
+
+    </div>
+    <% }); %>
+  </div>
+
+</div>
+
+<footer class="footer">
+    <p class="footer-text">@DiscussionForum , College Project, 2019</p>
+  </footer>

@@ -11,7 +11,17 @@ const CommentSchema = new mongoose.Schema({
         type: String, default: () => initialDate
        
        },
-    author : { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
+
+    votes: {
+           type: Number,
+           default: 0
+       },
+       
+    author : { type: mongoose.Types.ObjectId, ref: "User"},
+
+    upVotes : [{ type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+    downVotes : [{ type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+    voteScore : {type: Number, default: 0}
 });
 
 const Comment= mongoose.model('Comment', CommentSchema);

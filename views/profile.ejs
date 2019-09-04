@@ -1,0 +1,76 @@
+<div class="main-wrapper">
+<% include partials/sidenav %>
+
+  <!-- User Stats -->
+  <br>
+  <div class="row">
+
+    <span class="section-header col-lg-7 col-md-9 col-sm-10 ">
+
+      <i class="fas fa-2x fa-user-tag">&nbsp</i>
+      <h3 class="d-inline"><%= user.username %> </h3>
+    </span>
+  </div>
+  <div class="user-stats-parent">
+
+      <div class=" user-stats">
+        <span>
+          <i class="fas fa-2x fa-calendar-plus">&nbsp</i>
+          <h3 class="d-inline">Joined</h3>
+        </span><br><br>
+        <h4>Aug 5th, 2019</h4>
+      </div>
+
+      <div class=" user-stats">
+        <span>
+          <i class="fas fa-2x fa-pen">&nbsp</i>
+          <h3 class="d-inline">Posts</h3>
+        </span><br><br>
+        <h4>69</h4>
+      </div>
+
+      <div class=" user-stats">
+        <span>
+          <i class="fas fa-2x fa-chart-bar">&nbsp</i>
+          <h3 class="d-inline">Upvotes</h3>
+        </span><br><br>
+        <h4>666</h4>
+        <!-- <p>Edit?</p> -->
+      </div>
+      <hr>
+    </div>
+
+  
+    <% posts.forEach(function(post) { %> 
+         <div class="row">
+    <div class="userposts col-lg-7 col-md-9 col-sm-10">
+      <article class="uservote"> 
+        <% if(post.upVotes.includes(userid)) { %>
+          <i class="fas fa-chevron-up upvote-post is-liked" data-id="<%= post.id %>"></i><br>
+        <% } else { %>
+         <i class="fas fa-chevron-up upvote-post" data-id="<%= post.id %>"></i><br>
+        <% } %> 
+         <a href="#" class="vote-text"><%= post.voteScore %></a><br>
+         <% if(post.downVotes.includes(userid)) { %>
+        <i class="fas fa-chevron-down downvote-post is-liked" data-id="<%= post.id %>"></i>
+        <% } else { %>
+          <i class="fas fa-chevron-down downvote-post" data-id="<%= post.id %>"></i><br>
+          <% } %>  
+      </article>
+     <div class="title-desc">
+      <a href="/posts/<%= post.id %>"></a><p><%= post.title %></p></a> 
+      </div>
+      <div class="">
+        <span class="time-section">
+            <i><%= post.category %></i> |
+         <i>on <%= post.creation_date %></i>
+        </span>
+      </div>
+
+    </div>
+    </div>
+    <% }); %>
+</div>
+<footer class="footer">
+<p class="footer-text">@DiscussionForum , College Project, 2019</p>
+</footer>

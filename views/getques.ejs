@@ -1,0 +1,25 @@
+<div class="main-wrapper">
+<% include partials/sidenav %>
+
+<% if (posts.length == 0) { %>
+    <div class="row">
+            <div class="userposts col-lg-7 col-md-9 col-sm-10">
+    <p>No matching posts found</p>
+    </div>
+    </div>
+<% }  else { %>
+    <% posts.forEach(function(post) { %>
+        <div class="row">
+                <div class="userposts col-lg-7 col-md-9 col-sm-10">
+            <div class="title-desc">
+              <p><%= post.title %></p>
+                 <h6></h6>
+            </div>
+            </div>
+    </div>
+<% }) %>
+</div>
+<% } %>
+<footer class="footer">
+        <p class="footer-text">@DiscussionForum , College Project, 2019</p>
+      </footer>

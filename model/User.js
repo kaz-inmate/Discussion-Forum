@@ -9,17 +9,36 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+
   password: {
     type: String,
     required: true
   },
+
+  admin: {
+    type: Boolean,
+    default:false
+  },
+
+  checked: {
+    type: Boolean,
+    default:false
+  },
+
+  interests : [
+    {
+      type: String
+    }
+  ]
+
+
   // secretToken: {
   //   type: String
   // },
   // // active : {
   // //   type: Boolean
   // // },
-  posts : [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }]
+  //  posts : [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }]
 });
 
 const User = mongoose.model('User', UserSchema);

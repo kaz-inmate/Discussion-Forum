@@ -1,15 +1,16 @@
 const express = require('express');
 const path = require('path');
-const expressHbs = require('express-handlebars');
+const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
 const indexRouter = require('./routes/index');
+const mongoosastic = require('mongoosastic');
 
 const app = express();
 
-// Passport Config
+// Passport Config  
 require('./config/passport')(passport);
 
 // DB Config
@@ -22,10 +23,10 @@ const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+//ejs
+app.set('view engine', 'ejs');
+app.use(expressLayouts);
 
-//handlebars
-app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
-app.set('view engine', '.hbs');
 app.use(express.static('public'));
 
 // Express body parser
@@ -43,6 +44,12 @@ app.use(
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use((req, res, next) => {
+    res.locals.user = req.session.user;
+    res.locals.isauth = req.isAuthenticated();
+    next();
+});
 
 // Connect flash
 app.use(flash());

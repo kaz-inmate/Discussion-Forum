@@ -1,0 +1,44 @@
+<div class="main-wrapper">
+<% include partials/sidenav %>
+<div class="row">
+
+    <span class="section-header col-lg-7 col-md-9 col-sm-10 ">
+      &nbsp <br>
+      <i class="fas fa-2x fa-edit">&nbsp</i>
+      <h3 class="d-inline">Edit Post</h3>
+    </span>
+    <br>&nbsp
+  </div>
+  <br>
+  <!-- User Input Section -->
+  <div class=" user-input col-lg-7 col-md-9 col-sm-10">
+
+    <form class="" action="/posts/edit/<%= post.id %>" method="post">
+      <input class="input-area title-input" type="text" placeholder="Enter post title here." name="title" value="<%= post.title %>" required> <br>
+      <textarea class="input-area desc-input" type="text" placeholder="Enter post description here." name="textarea" value=""></textarea> <br>
+
+
+      <!-- Category Selector 2 -->
+      <div class="form-group  d-inline">
+          <select class=" btn btn-dark btn-sm dropdown-button" name="category" required>
+            <option><%= post.category %></option>
+            <option value="Coding Issues">Coding Issues</option>
+            <option value="Algorithm">Algorithm</option>
+            <option value="Exams">Exams</option>
+            <option value="Event">Event</option>
+          </select>
+  
+        </div>
+      <!-- Post Submit Button -->
+      <button class="btn btn-dark btn-sm submit-button" type="" name="cancel"> Cancel </button>
+      <button class="btn btn-dark btn-sm submit-button" type="submit" name="button"> Submit </button>
+      <br>&nbsp <br> &nbsp
+
+    </form>
+  </div>
+
+</div>
+</div>
+<footer class="footer edit-page-footer">
+  <p class="footer-text">@DiscussionForum , College Project, 2019</p>
+</footer>

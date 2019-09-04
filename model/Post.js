@@ -1,31 +1,26 @@
 const mongoose = require('mongoose');
+const User = require('./User');
+
 
 var initialDate = new Date().toLocaleDateString();
 
 const PostSchema = new mongoose.Schema({
-
-    username :{
-        type:String
-    },
-  
-  title: {
-    type:String,
-    required:true
+  username:{
+    type: String,
   },
-  textarea: {
-        type: String,
-        required: true
+
+  title: {
+    type: String, 
+    required:true
   },
 
   author: { 
     type: mongoose.Schema.Types.ObjectId, 
-    ref: "User",
+    ref: "User"
   },
   
-  created_date: {
-   type: String, default: () => initialDate
-  
-  },
+  creation_date: String,
+
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -33,12 +28,27 @@ const PostSchema = new mongoose.Schema({
     }
   ],
 
+  status: {
+    type: Boolean,
+    default: false
+  },
+
+  category : {
+    type: String
+  },
+  
+
+
 upVotes : [{ type: mongoose.Schema.Types.ObjectId, ref: "User"}],
 downVotes : [{ type: mongoose.Schema.Types.ObjectId, ref: "User"}],
-voteScore : {type: Number}
+voteScore : {type: Number, default: 0},
+reports: [{ type: mongoose.Schema.Types.ObjectId, ref: "User"}]
   
 });
 
+
+
 const Post = mongoose.model('Post', PostSchema);
 
+Post.createIndexes( { title: "text" } );
 module.exports = Post;
